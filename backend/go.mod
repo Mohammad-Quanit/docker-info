@@ -1,4 +1,4 @@
-module mq-extension
+module docker-info
 
 go 1.19
 

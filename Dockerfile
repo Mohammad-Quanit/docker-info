@@ -14,7 +14,7 @@ FROM --platform=$BUILDPLATFORM node:18.12-alpine3.16 AS client-builder
 WORKDIR /ui
 # cache packages in layer
 COPY ui/package.json /ui/package.json
-COPY ui/yarn.lock /ui/yarn.lock
+COPY ui/package-lock.json /ui/package-lock.json
 RUN --mount=type=cache,target=/usr/src/app/.npm \
     npm set cache /usr/src/app/.npm && \
     npm ci
@@ -23,7 +23,7 @@ COPY ui /ui
 RUN npm run build
 
 FROM alpine
-LABEL org.opencontainers.image.title="mq-extension" \
+LABEL org.opencontainers.image.title="docker-info" \
     org.opencontainers.image.description="First ever docker extension" \
     org.opencontainers.image.vendor="mquanit" \
     com.docker.desktop.extension.api.version="0.3.4" \
