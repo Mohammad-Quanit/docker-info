@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { bytesToMegaBytes } from "../Helpers";
 
 const client = createDockerDesktopClient();
 
@@ -37,7 +38,7 @@ export const Images = (): JSX.Element => {
         <TableRow>
           <TableCell>Image id</TableCell>
           <TableCell>Repo Tags</TableCell>
-          <TableCell>Command</TableCell>
+          <TableCell>Description</TableCell>
           <TableCell>Created</TableCell>
           <TableCell>Size</TableCell>
         </TableRow>
@@ -50,10 +51,10 @@ export const Images = (): JSX.Element => {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell>{image?.Id.substring(0, 15)}</TableCell>
-              <TableCell>{image?.RepoTags[0]}</TableCell>
-              <TableCell>{image?.Labels?.['org.opencontainers.image.description']}</TableCell>
+              <TableCell>{image?.RepoTags[0] || "-"}</TableCell>
+              <TableCell>{image?.Labels?.['org.opencontainers.image.description'] || "-"}</TableCell>
               <TableCell>{image?.Created}</TableCell>
-              <TableCell>{image?.Size}</TableCell>
+              <TableCell>{bytesToMegaBytes(image?.Size) || "-"}</TableCell>
             </TableRow>
           );
         })}
